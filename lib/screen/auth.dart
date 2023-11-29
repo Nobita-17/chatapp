@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'image.dart';
+import 'dart:io';
+
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
@@ -15,6 +18,7 @@ class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
   var email;
   var password;
+  File? selectedImage;
 
   Future<void> submit() async {
     final isvalid = _formKey.currentState!.validate();
@@ -26,8 +30,8 @@ class _AuthScreenState extends State<AuthScreen> {
     if (islogin) {
       try {
         final usercredentials = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-        print('sucessfull logggen in');
-        print(usercredentials);
+        // print('sucessfull logggen in');
+        // print(usercredentials);
       } on FirebaseAuthException catch (error)
         {
           if (error.code == 'user-not-found') {
@@ -42,7 +46,7 @@ class _AuthScreenState extends State<AuthScreen> {
       try {
         final usercredentials = await _firebaseAuth
             .createUserWithEmailAndPassword(email: email, password: password);
-        print(usercredentials);
+        // print(usercredentials);
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).clearSnackBars();    //?? using this means if this is null the ove to nexr
@@ -82,6 +86,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if(!islogin)
+                            Imagepicker(),
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Enter Email Address',
