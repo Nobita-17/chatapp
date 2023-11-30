@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'image.dart';
 import 'dart:io';
-
+//authecation screen for user
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AuthScreen extends StatefulWidget {
