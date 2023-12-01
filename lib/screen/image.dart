@@ -4,7 +4,9 @@ import 'dart:io';
 
 
 class Imagepicker extends StatefulWidget {
-  const Imagepicker({super.key});
+  const Imagepicker({super.key, required this.onpickedImage});
+
+ final void Function(File pickedImage) onpickedImage;  // we used this funcation to send or set the value of picked image
 
   @override
   State<Imagepicker> createState() => _ImagepickerState();
@@ -21,6 +23,7 @@ class _ImagepickerState extends State<Imagepicker> {
     setState(() {
       previw=File(pickImage.path);
     });
+    widget.onpickedImage(previw!);
   }
   @override
   Widget build(BuildContext context) {
